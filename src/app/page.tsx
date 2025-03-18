@@ -48,6 +48,9 @@ function BlogContent() {
     [posts]
   );
 
+
+  
+
   const handleCategoryClick = (cat: string) => {
     setSelectedCategories((prev) => {
       if (cat === "all") return ["all"];
@@ -59,14 +62,26 @@ function BlogContent() {
   };
 
   const filteredPosts = searchTerm
-    ? fuse.search(searchTerm).map((result) => result.item)
-    : posts.filter(
-        (p) =>
-          selectedCategories.includes("all") ||
-          selectedCategories.some((cat) =>
-            p.categories.map((c) => c.toLowerCase()).includes(cat.toLowerCase())
+  ? fuse.search(searchTerm).map((result) => result.item)
+  : posts.filter(
+      (p) => {
+        // Always show all posts if "all" is selected
+        if (selectedCategories.includes("all")) return true;
+        
+        // Make sure categories exist and are handled as an array
+        const postCategories = Array.isArray(p.categories) 
+          ? p.categories 
+          : p.categories ? [p.categories] : [];
+        
+        // Do case-insensitive comparison and trim whitespace
+        return selectedCategories.some((selectedCat) =>
+          postCategories.some((postCat) => 
+            postCat && typeof postCat === 'string' && 
+            postCat.toLowerCase().trim() === selectedCat.toLowerCase().trim()
           )
-      );
+        );
+      }
+    );
 
   // Sort posts by date (newest first)
   const sortedPosts = [...filteredPosts].sort((a, b) => 
@@ -78,9 +93,16 @@ function BlogContent() {
 
   // Calculate category counts for the filter buttons
   const categoryCounts = posts.reduce((acc, post) => {
-    post.categories.forEach((cat) => {
-      const lowerCat = cat.toLowerCase();
-      acc[lowerCat] = (acc[lowerCat] || 0) + 1;
+    // Make sure categories exist and are always handled as an array
+    const categories = Array.isArray(post.categories) 
+      ? post.categories 
+      : post.categories ? [post.categories] : [];
+      
+    categories.forEach((cat) => {
+      if (cat) {  // Check that category is defined
+        const lowerCat = cat.toLowerCase().trim();
+        acc[lowerCat] = (acc[lowerCat] || 0) + 1;
+      }
     });
     return acc;
   }, {} as Record<string, number>);
@@ -171,7 +193,7 @@ function BlogContent() {
                   .map(([name, count]) => ({ name, count }))
                   .sort((a, b) => b.count - a.count)
               ].map(({ name, count }) => (
-                <motion.button
+               <motion.button
   key={name}
   whileHover={{ scale: 1.05 }}
   whileTap={{ scale: 0.95 }}
@@ -184,6 +206,8 @@ function BlogContent() {
     font-normal
     text-xs
     flex items-center
+    z-10 relative  /* Add these to ensure it's clickable */
+    cursor-pointer
     ${
       selectedCategories.includes(name)
         ? "bg-blue-500 text-white"
