@@ -9,7 +9,7 @@ interface ExtendedBlogPost extends BlogPost {
 
 // Replace with your actual Google Sheet ID if you have one
 // Otherwise, we'll rely on the fallback data
-const BLOG_SHEET_URL = 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE/pub?gid=0&single=true&output=csv';
+const BLOG_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQY0mDz0IreKP5ZdYTcPu0T0XIm5vbpcagposyo7sW0S4JVCdCRwWaluF7y2tX1PbNfh0n9Jy9qqt49/pub?gid=337002501&single=true&output=csv';
 const FALLBACK_URL = '/data/fallbackPosts.csv';
 const TIMEOUT_MS = 3000; // 3 second timeout
 
@@ -32,7 +32,6 @@ function parseBlogData(item: Record<string, any>): ExtendedBlogPost {
       content: item.content || '',
       author: item.author || 'Anonymous',
       date: item.date || new Date().toISOString().split('T')[0],
-      readTime: item.readTime || '5 min read',
       categories: item.categories ? item.categories.split(',').map((cat: string) => cat.trim()) : [],
       featuredImage: item.featuredImage || 'https://picsum.photos/id/1039/1000/600',
       featured: item.featured === 'TRUE' || item.featured === 'true'
@@ -48,7 +47,6 @@ function parseBlogData(item: Record<string, any>): ExtendedBlogPost {
       content: 'There was an error loading this post content',
       author: 'System',
       date: new Date().toISOString().split('T')[0],
-      readTime: '0 min read',
       categories: ['error'],
       featuredImage: 'https://picsum.photos/id/1039/1000/600',
       featured: false

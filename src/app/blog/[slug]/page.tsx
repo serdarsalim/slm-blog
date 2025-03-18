@@ -105,54 +105,29 @@ function BlogPostContent() {
         transition={{ duration: 0.6 }}
         className="mb-8"
       >
-        <div className="flex flex-wrap gap-2 mb-4">
-          {post.categories.map((category) => (
-            <span
-              key={category}
-              className="inline-block px-3 py-1 text-sm font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100"
-            >
-              {category}
-            </span>
-          ))}
-        </div>
+        
 
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
           {post.title}
         </h1>
 
-        <div className="flex items-center mb-6">
-          <div className="mr-4">
-            <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xl font-bold text-gray-500 dark:text-gray-300">
-              {post.author.charAt(0)}
-            </div>
-          </div>
-          <div>
-            <p className="font-medium text-gray-900 dark:text-white">
-              {post.author}
-            </p>
-            <div className="flex text-sm text-gray-500 dark:text-gray-400">
-              <time dateTime={post.date}>{formatDate(post.date)}</time>
-              <span className="mx-2">•</span>
-              <span>{post.readTime}</span>
-            </div>
-          </div>
-        </div>
+        <div className="flex items-center mb-6 -ml-6.5">
+  <div className="mr-4">
+    
+  </div>
+  <div>
+    <p className="font-medium text-gray-900 dark:text-white flex items-center">
+      {post.author}
+      <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
+        ({formatDate(post.date)})
+      </span>
+    </p>
+    <div className="text-sm text-gray-500 dark:text-gray-400">
+     
+    </div>
+  </div>
+</div>
       </motion.header>
-
-      {/* Featured image */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.1 }}
-        className="relative h-[40vh] md:h-[50vh] w-full mb-8 rounded-xl overflow-hidden"
-      >
-        <Image
-          src={post.featuredImage}
-          alt={post.title}
-          fill
-          className="object-cover"
-        />
-      </motion.div>
 
       {/* Post content */}
       <motion.div
@@ -222,7 +197,7 @@ function BlogPostContent() {
           </div>
           <Link
             href="/"
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-center"
+            className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-300 transition-colors text-center"
           >
             Back to All Posts
           </Link>

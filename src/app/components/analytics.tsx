@@ -29,7 +29,7 @@ function AnalyticsContent() {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-H753YXSDWD', {
+            gtag('config', 'G-XXXXXXXX', {
               page_path: window.location.pathname,
             });
           `,
