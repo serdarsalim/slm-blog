@@ -63,7 +63,7 @@ function BlogContent() {
     : posts.filter(
         (p) =>
           selectedCategories.includes("all") ||
-          selectedCategories.every((cat) =>
+          selectedCategories.some((cat) =>
             p.categories.map((c) => c.toLowerCase()).includes(cat.toLowerCase())
           )
       );
@@ -105,9 +105,8 @@ function BlogContent() {
     <>
 
 
-{/* Hero Section  */}
 <section className="py-10 px-4 bg-gradient-to-b from-white to-gray-50 dark:from-black dark:to-gray-900">
-  <div className="max-w-xs mx-auto text-center">
+  <div className="max-w-3xl mx-auto text-center">
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -128,32 +127,23 @@ function BlogContent() {
         }}
       />
       
-      {/* Main title with refined animation */}
-      <motion.h1 
-        className="text-3xl font-medium tracking-tight text-gray-900 dark:text-white relative"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          duration: 1, 
-          ease: [0.16, 1, 0.3, 1] 
-        }}
-      >
-        <span className="font-bold">SLM</span> Blog
-      </motion.h1>
-      
-      {/* Subtle description text */}
-      <motion.p
-        className="mt-5 text-sm text-gray-500 dark:text-gray-400 font-light"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ 
-          duration: 1, 
-          delay: 0.3,
-          ease: [0.16, 1, 0.3, 1] 
-        }}
-      >
-        Digital notes on my interests. 📚✨
-      </motion.p>
+      {/* Title and subtitle in a row */}
+      <div className="flex items-center justify-center gap-3 flex-wrap">
+ 
+        
+        <motion.h2
+          className="text-md text-gray-500 dark:text-gray-400 font-semibold -mt-4 -mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ 
+            duration: 1, 
+            delay: 0.3,
+            ease: [0.16, 1, 0.3, 1] 
+          }}
+        >
+          Digital notes on my interests. 📚✨
+        </motion.h2>
+      </div>
       
       {/* Subtle gradient glow */}
       <motion.div
@@ -170,7 +160,7 @@ function BlogContent() {
 
       {/* Search and Filters */}
       <section className="py-10 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-5xl mx-auto px-4">
+        <div className="max-w-5xl mx-auto px-2">
           <div className="flex flex-col items-center gap-6 mb-10 -mt-10">
             
 
@@ -182,50 +172,52 @@ function BlogContent() {
                   .sort((a, b) => b.count - a.count)
               ].map(({ name, count }) => (
                 <motion.button
-                  key={name}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleCategoryClick(name)}
-                  className={`
-                    px-3 py-2 
-                    rounded-lg 
-                    transition-all 
-                    duration-200 
-                    font-medium
-                    text-sm
-                    flex items-center
-                    ${
-                      selectedCategories.includes(name)
-                        ? "bg-blue-500 text-white"
-                        : "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700"
-                    }
-                  `}
-                >
-                  <span>
-                    {name === "all"
-                      ? "All Posts"
-                      : name.charAt(0).toUpperCase() + name.slice(1)}
-                    <span
-                      className={`
-                        ml-2
-                        inline-flex items-center justify-center 
-                        w-6 h-6 
-                        rounded-full text-xs font-bold
-                        ${
-                          selectedCategories.includes(name)
-                            ? "bg-white text-blue-500"
-                            : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-                        }
-                      `}
-                    >
-                      {count}
-                    </span>
-                  </span>
-                </motion.button>
+  key={name}
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={() => handleCategoryClick(name)}
+  className={`
+    px-2 py-1 
+    rounded-lg 
+    transition-all 
+    duration-200 
+    font-normal
+    text-xs
+    flex items-center
+    ${
+      selectedCategories.includes(name)
+        ? "bg-blue-500 text-white"
+        : "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700"
+    }
+  `}
+>
+  <span>
+    {name === "all"
+      ? "All Posts"
+      : name.charAt(0).toUpperCase() + name.slice(1)}
+    <span
+      className={`
+        ml-1
+        inline-flex items-center justify-center 
+        w-4 h-4 
+        rounded-full text-[10px] font-medium
+        ${
+          selectedCategories.includes(name)
+            ? "bg-white text-blue-500"
+            : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+        }
+      `}
+    >
+      {count}
+    </span>
+  </span>
+</motion.button>
               ))}
-            </div>
             
-            <div className="relative w-full max-w-4xl -mb-10">
+            </div>
+            {/* this is how you change sarch bar size: max-w-3xl  */}
+
+            <div className="relative w-full max-w-[50%] -mb-10">
               <input
                 type="text"
                 placeholder="Search posts..."
@@ -299,11 +291,7 @@ function BlogContent() {
               <div className="flex flex-row bg-gray-50 dark:bg-gray-700 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 h-32">
                 {/* Content - 4/5 of the space */}
                 <div className="p-4 flex-1 w-4/5 overflow-hidden">
-                  <div className="flex mb-1">
-                    <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-200 truncate">
-                      {post.categories[0]}
-                    </span>
-                  </div>
+                  
 
                   <h3 className="text-base font-bold line-clamp-2 mb-1 text-gray-800 dark:text-white">
                     {post.title}
@@ -336,37 +324,9 @@ function BlogContent() {
   </div>
 </section>
 
-      {/* Newsletter Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
-            Stay Updated
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-lg mx-auto">
-            Subscribe to get the latest articles and updates delivered directly to your inbox.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="flex-grow px-4 py-3 rounded-lg text-black dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </section>
+    
 
-      {/* Footer */}
-      <footer className="py-8 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <p className="text-gray-600 dark:text-gray-400">
-            © {new Date().getFullYear()} SLM Blog. All rights reserved.
-          </p>
-        </div>
-      </footer>
+     
     </>
   );
 }

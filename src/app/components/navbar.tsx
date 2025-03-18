@@ -64,7 +64,7 @@ export default function Navbar() {
             />
           </div>
           <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-            Sheets Master
+            Serdar Salim
           </h1>
         </Link>
 
@@ -107,24 +107,7 @@ export default function Navbar() {
           >
             Home
           </Link>
-          <Link
-            href="/blog"
-            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition"
-          >
-            Blog
-          </Link>
-          <Link
-            href="/#how-it-works"
-            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition"
-          >
-            How It Works
-          </Link>
-          <Link
-            href="/#faq"
-            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition"
-          >
-            FAQ
-          </Link>
+   
           <Link
             href="/about"
             className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition"
