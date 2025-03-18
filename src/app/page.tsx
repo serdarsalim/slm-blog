@@ -10,22 +10,7 @@ import { useBlogPosts } from "@/app/hooks/blogService";
 
 export default function Blog() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white relative overflow-hidden">
-      {/* Grid Background */}
-      <div
-        className="fixed inset-0 pointer-events-none"
-        style={{
-          zIndex: 0,
-          backgroundImage:
-            "linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px), " +
-            "linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px), " +
-            "linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px 98%), " +
-            "linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px 98%)",
-          backgroundSize: "5% 5%, 2% 2%, 100% 100%, 100% 100%",
-          backgroundPosition: "0 0, 0 0, 5% 0, 0 5%",
-        }}
-      ></div>
-
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
       {/* Wrap all client-interactive content in Suspense */}
       <Suspense
         fallback={
@@ -118,145 +103,78 @@ function BlogContent() {
 
   return (
     <>
-      {/* Hero Section */}
-      <main
-        id="home"
-        className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-12 pb-12 min-h-[28vh] select-none max-w-6xl mx-auto"
+
+
+{/* Hero Section  */}
+<section className="py-10 px-4 bg-gradient-to-b from-white to-gray-50 dark:from-black dark:to-gray-900">
+  <div className="max-w-xs mx-auto text-center">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
+      className="relative"
+    >
+      {/* Subtle floating shape in background */}
+      <motion.div
+        className="absolute -top-10 left-1/2 w-40 h-40 rounded-full bg-blue-100 dark:bg-blue-900/20 filter blur-3xl opacity-40 dark:opacity-30"
+        animate={{ 
+          x: [0, 10, -10, 0],
+          y: [0, -10, 10, 0],
+        }}
+        transition={{ 
+          repeat: Infinity,
+          duration: 12,
+          ease: "easeInOut"
+        }}
+      />
+      
+      {/* Main title with refined animation */}
+      <motion.h1 
+        className="text-3xl font-medium tracking-tight text-gray-900 dark:text-white relative"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 1, 
+          ease: [0.16, 1, 0.3, 1] 
+        }}
       >
-        {/* Background container */}
-        <div className="absolute inset-0 bg-white/80 dark:bg-gray-800/80 rounded-b-lg shadow-2xl overflow-hidden">
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-50/30 to-purple-50/30 dark:from-blue-900/10 dark:to-purple-900/10" />
-          {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-20 dark:opacity-10" 
-               style={{
-                 backgroundImage: "radial-gradient(circle, rgba(0,0,0,0.1) 1px, transparent 1px)",
-                 backgroundSize: "20px 20px"
-               }} />
-        </div>
+        <span className="font-bold">SLM</span> Blog
+      </motion.h1>
+      
+      {/* Subtle description text */}
+      <motion.p
+        className="mt-5 text-sm text-gray-500 dark:text-gray-400 font-light"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ 
+          duration: 1, 
+          delay: 0.3,
+          ease: [0.16, 1, 0.3, 1] 
+        }}
+      >
+        Digital notes on my interests. 📚✨
+      </motion.p>
+      
+      {/* Subtle gradient glow */}
+      <motion.div
+        className="absolute -z-10 inset-0 bg-gradient-radial from-blue-50/50 via-transparent to-transparent dark:from-blue-900/10 dark:via-transparent dark:to-transparent"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2 }}
+      />
+    </motion.div>
+  </div>
+</section>
 
-        {/* Content */}
-        <motion.div
-          className="relative z-10 max-w-4xl w-full"
-          initial={{ opacity: 0, y: -80 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.2,
-            duration: 0.7,
-            type: "spring",
-            stiffness: 60,
-            damping: 15,
-          }}
-        >
-          {/* Header content */}
-          <div className="mt-12">
-            <motion.h1
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-800 dark:text-white"
-              style={{
-                letterSpacing: "-0.025em",
-              }}
-            >
-              My Tech Blog
-            </motion.h1>
+ 
 
-            {/* Subtext */}
-            <motion.p
-              className="text-xl mt-6 mb-6 max-w-2xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              Insights, tutorials, and stories about technology and development
-            </motion.p>
-          </div>
-        </motion.div>
-      </main>
-
-      {/* Featured Posts */}
-      {featuredPosts.length > 0 && (
-        <section className="relative z-10 py-12 bg-gray-100 dark:bg-gray-800">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-8 text-gray-800 dark:text-white">
-              Featured Posts
-            </h2>
+      {/* Search and Filters */}
+      <section className="py-10 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="flex flex-col items-center gap-6 mb-10 -mt-10">
             
-            <div className="grid md:grid-cols-2 gap-8">
-              {featuredPosts.slice(0, 2).map((post) => (
-                <Link 
-                  href={`/blog/${post.slug}`} 
-                  key={post.id}
-                  className="group"
-                >
-                  <motion.div
-                    className="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden h-full"
-                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                  >
-                    <div className="relative h-64">
-                      <Image
-                        src={post.featuredImage || defaultImage}
-                        alt={post.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        onError={(e) => {
-                          // Fallback for client-side error handling
-                          const target = e.target as HTMLImageElement;
-                          target.src = defaultImage;
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                      <div className="absolute bottom-0 left-0 p-6 text-white">
-                        <div className="flex gap-2 mb-2">
-                          {post.categories.slice(0, 2).map((cat) => (
-                            <span
-                              key={cat}
-                              className="px-2 py-1 text-xs font-medium rounded-full bg-white/20 backdrop-blur-sm"
-                            >
-                              {cat}
-                            </span>
-                          ))}
-                        </div>
-                        <h3 className="text-2xl font-bold mb-2">{post.title}</h3>
-                        <div className="flex items-center text-sm">
-                          <span>{post.date}</span>
-                          <span className="mx-2">•</span>
-                          <span>{post.readTime}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <p className="text-gray-700 dark:text-gray-300 line-clamp-3">
-                        {post.excerpt}
-                      </p>
-                    </div>
-                  </motion.div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
-      {/* Blog Posts Section */}
-      <section id="blog" className="relative z-10 p-6 md:p-12 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
-          transition={{ duration: 0.5 }}
-          className="card-container dark:bg-gray-800"
-        >
-          <div className="flex flex-col items-center gap-4 mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
-              Latest Articles
-            </h2>
-            
-            <p className="text-gray-700 dark:text-gray-300 text-center text-lg pb-2">
-              Browse all posts or filter by category
-            </p>
-
-            <div className="w-full flex flex-wrap justify-center gap-2 mb-4">
+            <div className="w-full flex flex-wrap justify-center gap-2">
               {[
                 { name: "all", count: posts.length },
                 ...Object.entries(categoryCounts)
@@ -272,14 +190,14 @@ function BlogContent() {
                     px-3 py-2 
                     rounded-lg 
                     transition-all 
-                    duration-300 
+                    duration-200 
                     font-medium
                     text-sm
                     flex items-center
                     ${
                       selectedCategories.includes(name)
                         ? "bg-blue-500 text-white"
-                        : "bg-gray-200 dark:bg-gray-700 hover:bg-blue-300 dark:hover:bg-blue-700 text-gray-800 dark:text-gray-200"
+                        : "bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700"
                     }
                   `}
                 >
@@ -296,7 +214,7 @@ function BlogContent() {
                         ${
                           selectedCategories.includes(name)
                             ? "bg-white text-blue-500"
-                            : "bg-gray-500/20 text-gray-700 dark:bg-gray-600/40 dark:text-gray-300"
+                            : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
                         }
                       `}
                     >
@@ -306,12 +224,12 @@ function BlogContent() {
                 </motion.button>
               ))}
             </div>
-
-            <div className="relative w-full max-w-2xl">
+            
+            <div className="relative w-full max-w-4xl -mb-10">
               <input
                 type="text"
                 placeholder="Search posts..."
-                className="w-full px-4 py-3 rounded-lg text-black dark:text-white bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:bg-white dark:focus:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-lg text-black dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -326,94 +244,129 @@ function BlogContent() {
                   </span>
                 )}
               </motion.div>
+
             </div>
           </div>
-
-          {loading ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex flex-col items-center justify-center py-12 space-y-4"
-            >
-              <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-              <p className="text-gray-400 dark:text-gray-500">
-                Loading posts...
-              </p>
-            </motion.div>
-          ) : sortedPosts.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-12"
-            >
-              <p className="text-gray-400 dark:text-gray-500">
-                No posts found matching your criteria. Try a different search term or category.
-              </p>
-            </motion.div>
-          ) : (
-            /* Blog post cards */
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              {sortedPosts.map((post, index) => (
-                <motion.div
-                  key={post.id}
-                  custom={index}
-                  initial="hidden"
-                  animate="visible"
-                  variants={cardVariants}
-                  className="flex flex-col h-full bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-2xl"
-                >
-                  <Link href={`/blog/${post.slug}`} className="block h-full">
-                    <div className="relative h-56">
-                      <Image
-                        src={post.featuredImage || defaultImage}
-                        alt={post.title}
-                        className="object-cover transition-transform duration-300 hover:scale-105"
-                        fill
-                        onError={(e) => {
-                          // Fallback for client-side error handling
-                          const target = e.target as HTMLImageElement;
-                          target.src = defaultImage;
-                        }}
-                      />
-                    </div>
-
-                    <div className="p-6 flex flex-col flex-grow">
-                      <div className="mb-3 flex flex-wrap gap-1">
-                        {post.categories.slice(0, 3).map((cat) => (
-                          <span
-                            key={cat}
-                            className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100"
-                          >
-                            {cat}
-                          </span>
-                        ))}
-                      </div>
-
-                      <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
-                        {post.title}
-                      </h3>
-                      
-                      <p className="text-gray-700 dark:text-gray-300 line-clamp-3 mb-4">
-                        {post.excerpt}
-                      </p>
-                      
-                      <div className="mt-auto flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                        <span>{post.date}</span>
-                        <span>{post.readTime}</span>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
-        </motion.div>
+        </div>
       </section>
+
+      {/* Blog Posts Section*/}
+      
+<section id="blog" className="py-10 bg-white dark:bg-gray-800">
+  <div className="max-w-3xl mx-auto px-4">
+    <h2 className="text-2xl font-bold mb-8 -mt-10 text-gray-800 dark:text-white">
+    </h2>
+
+    {loading ? (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="flex flex-col items-center justify-center py-12 space-y-4"
+      >
+        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-gray-400 dark:text-gray-500">
+          Loading posts...
+        </p>
+      </motion.div>
+    ) : sortedPosts.length === 0 ? (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-center py-12"
+      >
+        <p className="text-gray-500 dark:text-gray-400">
+          No posts found matching your criteria. Try a different search term or category.
+        </p>
+      </motion.div>
+    ) : (
+      /* Blog post cards in single column */
+      <motion.div
+        className="space-y-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        {sortedPosts.map((post, index) => (
+          <motion.div
+            key={post.id}
+            custom={index}
+            initial="hidden"
+            animate="visible"
+            variants={cardVariants}
+          >
+            <Link href={`/blog/${post.slug}`} className="block h-full">
+              {/* Half-sized card layout */}
+              <div className="flex flex-row bg-gray-50 dark:bg-gray-700 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 h-32">
+                {/* Content - 4/5 of the space */}
+                <div className="p-4 flex-1 w-4/5 overflow-hidden">
+                  <div className="flex mb-1">
+                    <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-200 truncate">
+                      {post.categories[0]}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base font-bold line-clamp-2 mb-1 text-gray-800 dark:text-white">
+                    {post.title}
+                  </h3>
+                  
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {post.date} • {post.readTime}
+                  </p>
+                </div>
+                
+                {/* Image - 1/5 of the space */}
+                <div className="relative w-1/5 min-w-[80px]">
+                  <Image
+                    src={post.featuredImage || defaultImage}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = defaultImage;
+                    }}
+                  />
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
+      </motion.div>
+    )}
+  </div>
+</section>
+
+      {/* Newsletter Section */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
+            Stay Updated
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-lg mx-auto">
+            Subscribe to get the latest articles and updates delivered directly to your inbox.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="Your email address"
+              className="flex-grow px-4 py-3 rounded-lg text-black dark:text-white bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+              Subscribe
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <p className="text-gray-600 dark:text-gray-400">
+            © {new Date().getFullYear()} SLM Blog. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </>
   );
 }

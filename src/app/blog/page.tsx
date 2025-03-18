@@ -118,18 +118,18 @@ function BlogIndexContent() {
 
       {/* Blog Posts Section */}
       <section className="relative z-10 py-12 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <div className="flex flex-col items-center gap-4 mb-8">
             {/* Search and filters */}
-            <div className="w-full max-w-xl mb-8">
-              <div className="relative mb-4">
-                <input
-                  type="text"
-                  placeholder="Search posts..."
-                  className="w-full px-4 py-3 rounded-lg text-black dark:text-white bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:bg-white dark:focus:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
+            <div className="w-40 mb-8"> {/* Change from max-w-[200px] to w-40 */}
+  <div className="relative mb-4">
+    <input
+      type="text"
+      placeholder="Search posts..."
+      className="w-40 px-4 py-2 rounded-lg text-black dark:text-white bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:bg-white dark:focus:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
                 <motion.div
                   animate={{ opacity: searchTerm ? 1 : 0 }}
                   className="absolute right-4 top-3 cursor-pointer"
