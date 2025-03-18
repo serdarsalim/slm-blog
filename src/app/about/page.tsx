@@ -36,7 +36,7 @@ function AboutContent() {
 
   return (
     <>
-      <main className="relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 py-24 pt-32 min-h-screen pt-20 -mt-20">
+      <main className="relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 py-24 pt-32 min-h-screen  -mt-20">
         {/* Mission Statement */}
         <motion.div
           className="w-full max-w-4xl mb-8 md:mb-12 -mt-15"

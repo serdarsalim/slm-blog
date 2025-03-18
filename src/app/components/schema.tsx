@@ -2,21 +2,21 @@
 
 import { Suspense } from 'react';
 import Script from 'next/script';
-import { useTemplates } from '../hooks/blogService';
 import { usePathname } from 'next/navigation';
+import { useBlogPosts } from '../hooks/blogService';
 
 function SchemaContent() {
-  const { templates } = useTemplates();
+  const { posts } = useBlogPosts();
   const pathname = usePathname();
   
   // Function to convert relative URLs to absolute URLs
   const getAbsoluteUrl = (relativeUrl) => {
-    // Base URL for the site
-    const baseUrl = "https://sheetsmaster.co";
+    // Base URL for the site (update to your blog URL)
+    const baseUrl = "https://slm-blog.netlify.app";
     
     // Check if the URL is already absolute
     if (!relativeUrl || relativeUrl.startsWith('http://') || relativeUrl.startsWith('https://')) {
-      return relativeUrl || `${baseUrl}/default-template.png`;
+      return relativeUrl || `${baseUrl}/default-image.png`;
     }
     
     // Make sure relativeUrl starts with a slash
@@ -26,32 +26,29 @@ function SchemaContent() {
     return `${baseUrl}${normalizedRelativeUrl}`;
   };
   
-  // Create CollectionPage schema for template catalog
-  const collectionPageSchema = {
+  // Blog schema - using posts instead of templates
+  const blogSchema = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Google Sheets Templates Collection | Sheets Master",
-    "description": "Curated collection of high-quality Google Sheets templates for budgeting, finance, business, and productivity.",
-    "url": "https://sheetsmaster.co",
+    "@type": "Blog",
+    "name": "SLM Blog",
+    "description": "Digital notes on my interests.",
+    "url": "https://slm-blog.netlify.app",
     "mainEntity": {
       "@type": "ItemList",
-      "itemListElement": templates.map((template, index) => ({
+      "itemListElement": posts.map((post, index) => ({
         "@type": "ListItem",
         "position": index + 1,
         "item": {
-          "@type": "SoftwareApplication",
-          "name": template.name,
-          "description": template.description,
-          "image": getAbsoluteUrl(template.image),
-          "applicationCategory": "SpreadsheetApplication",
-          "operatingSystem": "Web",
-          "offers": {
-            "@type": "Offer",
-            "price": template.isPaid ? template.price.replace(/[^0-9.]/g, '') : "0.00",
-            "priceCurrency": "USD",
-            "availability": "https://schema.org/OnlineOnly",
-            "url": template.isPaid ? template.buyUrl : template.freeUrl
-          }
+          "@type": "BlogPosting",
+          "headline": post.title,
+          "description": post.excerpt,
+          "image": getAbsoluteUrl(post.featuredImage),
+          "datePublished": post.date,
+          "author": {
+            "@type": "Person",
+            "name": post.author || "Serdar Salim"
+          },
+          "url": `https://slm-blog.netlify.app/blog/${post.slug}`
         }
       }))
     }
@@ -61,33 +58,32 @@ function SchemaContent() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Sheets Master", 
-    "url": "https://sheetsmaster.co",
+    "name": "SLM Blog", 
+    "url": "https://slm-blog.netlify.app",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://sheetsmaster.co/logo.png",
+      "url": "https://slm-blog.netlify.app/logo.png",
       "width": "180",
       "height": "180"
     }, 
     "sameAs": [
-      "https://youtube.com/@SheetsMAsterOfficial",
-      "https://twitter.com/GSheetsMaster",
+      // Add your social links here
     ],
-    "description": "Sheets Master provides high-quality Google Sheets templates to save time and stay organized."
+    "description": "Digital notes on my interests."
   };
 
   // WebSite schema for better SEO
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "url": "https://sheetsmaster.co",
-    "name": "Sheets Master",
-    "description": "Google Sheets Templates to Save Time & Stay Organized",
+    "url": "https://slm-blog.netlify.app",
+    "name": "SLM Blog",
+    "description": "Digital notes on my interests.",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://sheetsmaster.co/?search={search_term_string}"
+        "urlTemplate": "https://slm-blog.netlify.app/?search={search_term_string}"
       },
       "query-input": "required name=search_term_string"
     }
@@ -97,25 +93,25 @@ function SchemaContent() {
   const webpageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "url": `https://sheetsmaster.co${pathname}`,
+    "url": `https://slm-blog.netlify.app${pathname}`,
     "name": pathname === "/" 
-      ? "Sheets Master | Google Sheets Templates to Save Time & Stay Organized" 
-      : `${pathname.substring(1).charAt(0).toUpperCase() + pathname.substring(2)} | Sheets Master`,
-    "description": "Discover Google Sheets templates for budgeting, finance, business, and productivity. Save time and get organized today!",
+      ? "SLM Blog | Digital notes on my interests" 
+      : `${pathname.substring(1).charAt(0).toUpperCase() + pathname.substring(2)} | SLM Blog`,
+    "description": "Digital notes on my interests.",
     "isPartOf": {
       "@type": "WebSite",
-      "name": "Sheets Master",
-      "url": "https://sheetsmaster.co"
+      "name": "SLM Blog",
+      "url": "https://slm-blog.netlify.app"
     }
   };
 
   return (
     <>
       <Script
-        id="schema-collection"
+        id="schema-blog"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(collectionPageSchema)
+          __html: JSON.stringify(blogSchema)
         }}
       />
       <Script
