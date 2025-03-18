@@ -7,10 +7,10 @@ interface ExtendedBlogPost extends BlogPost {
   load: boolean;
 }
 
-// Replace with your actual Google Sheet ID if you have one
-// Otherwise, we'll rely on the fallback data
-const BLOG_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQY0mDz0IreKP5ZdYTcPu0T0XIm5vbpcagposyo7sW0S4JVCdCRwWaluF7y2tX1PbNfh0n9Jy9qqt49/pub?gid=337002501&single=true&output=csv';
-const FALLBACK_URL = '/data/fallbackPosts.csv';
+// In production, we primarily use the fallback file which is updated during build
+// Google Sheets is only used as a fallback for development or in case the file is missing
+const FALLBACK_URL = '/data/blogPosts.csv';
+const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQY0mDz0IreKP5ZdYTcPu0T0XIm5vbpcagposyo7sW0S4JVCdCRwWaluF7y2tX1PbNfh0n9Jy9qqt49/pub?gid=337002501&single=true&output=csv';
 const TIMEOUT_MS = 3000; // 3 second timeout
 
 // Event to notify subscribers when data changes
@@ -61,8 +61,9 @@ async function fetchWithTimeout(url: string): Promise<Response> {
   try {
     const response = await fetch(url, {
       signal: controller.signal,
-      cache: 'no-store',
-      headers: {
+      // Allow caching for the fallback file to improve performance
+      cache: url.includes('fallbackPosts') ? 'force-cache' : 'no-store',
+      headers: url.includes('fallbackPosts') ? {} : {
         'Pragma': 'no-cache',
         'Cache-Control': 'no-cache'
       }
@@ -124,9 +125,9 @@ async function fetchAndProcessPosts(url: string, isFallback = false): Promise<Bl
     console.error("Error in fetchAndProcessPosts:", error);
     
     if (!isFallback) {
-      console.log("Trying fallback CSV file");
-      // Try fallback if primary source fails
-      return fetchAndProcessPosts(FALLBACK_URL, true);
+      console.log("Primary source failed, trying fallback source");
+      // If fallback CSV fails, try Google Sheets (reverse the normal order)
+      return fetchAndProcessPosts(GOOGLE_SHEETS_URL, true);
     }
     
     console.error("All data sources failed, no posts available", error);
@@ -137,7 +138,8 @@ async function fetchAndProcessPosts(url: string, isFallback = false): Promise<Bl
 // Main function to load blog posts
 export async function loadBlogPosts(): Promise<BlogPost[]> {
   try {
-    return await fetchAndProcessPosts(BLOG_SHEET_URL);
+    // Primary source is now the fallback CSV that's updated during build
+    return await fetchAndProcessPosts(FALLBACK_URL);
   } catch (error) {
     console.error("All blog post sources failed:", error);
     return []; // Return empty array as last resort
@@ -147,14 +149,15 @@ export async function loadBlogPosts(): Promise<BlogPost[]> {
 // Get a specific post by slug
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
-    const posts = await fetchAndProcessPosts(BLOG_SHEET_URL);
+    // Primary source is now the fallback CSV that's updated during build
+    const posts = await fetchAndProcessPosts(FALLBACK_URL);
     return posts.find(p => p.slug === slug) || null;
   } catch (error) {
     console.error(`Failed to get post ${slug}:`, error);
     
     try {
-      // Try the fallback CSV
-      const fallbackPosts = await fetchAndProcessPosts(FALLBACK_URL, true);
+      // Try Google Sheets as fallback
+      const fallbackPosts = await fetchAndProcessPosts(GOOGLE_SHEETS_URL, true);
       return fallbackPosts.find(p => p.slug === slug) || null;
     } catch (fallbackError) {
       console.error(`Failed to get post ${slug} from fallback:`, fallbackError);
