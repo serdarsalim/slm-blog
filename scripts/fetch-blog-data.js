@@ -1,8 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import fetch from 'node-fetch';
-import { parse } from 'csv-parse/sync';
-// Remove the stringify import since you're not using it
+const fs = require('fs');
+const path = require('path');
+const fetch = require('node-fetch');
+const { parse } = require('csv-parse/sync');
 
 const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQY0mDz0IreKP5ZdYTcPu0T0XIm5vbpcagposyo7sW0S4JVCdCRwWaluF7y2tX1PbNfh0n9Jy9qqt49/pub?gid=337002501&single=true&output=csv';
 const OUTPUT_FILE_PATH = path.join(__dirname, '../public/data/fallbackPosts.csv');

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fetch-blog-data": "ts-node scripts/fetch-blog-data.ts",
+    "fetch-blog-data": "node scripts/fetch-blog-data.js",
     "prebuild": "npm run fetch-blog-data"
   },
   "dependencies": {
