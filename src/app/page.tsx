@@ -114,7 +114,7 @@ function BlogContent() {
   };
 
   // Default fallback image for posts
-  const defaultImage = "/images/default-post.jpg";
+  const defaultImage = "https://picsum.photos/id/1039/1000/600";
 
   return (
     <>

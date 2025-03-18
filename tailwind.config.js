@@ -1,4 +1,3 @@
-slm-blog/tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
@@ -10,7 +9,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Custom colors for your blog
         'primary': {
           50: '#f0f9ff',
           100: '#e0f2fe',
@@ -58,8 +56,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+        sans: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
       },
     },
   },
