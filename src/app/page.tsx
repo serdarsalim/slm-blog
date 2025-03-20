@@ -10,7 +10,7 @@ import { useBlogPosts } from "@/app/hooks/blogService";
 
 export default function Blog() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-100">
+    <div className="min-h-screen bg-white dark:bg-slate-900 text-gray-800 dark:text-gray-100">
       {/* Outer container with max width to prevent full page width */}
       <div className="max-w-4xl mx-auto bg-white dark:bg-slate-800 shadow-sm">
         {/* Wrap all client-interactive content in Suspense */}
@@ -303,7 +303,7 @@ function BlogContent() {
                 >
                   <Link href={`/blog/${post.slug}`} className="block h-full">
                     {/* Softer card colors */}
-                    <div className="flex flex-row bg-gray-50 dark:bg-slate-700 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 h-32 border border-gray-100 dark:border-slate-600">
+                    <div className="flex flex-row bg-slate-100 dark:bg-slate-700 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 h-32 border border-gray-100 dark:border-slate-600">
                       {/* Content - 4/5 of the space */}
                       <div className="p-4 flex-1 w-4/5 overflow-hidden flex flex-col">
                         <h3 className="text-base font-bold line-clamp-2 mb-1 text-gray-700 dark:text-gray-100">
@@ -337,23 +337,7 @@ function BlogContent() {
           )}
         </div>
 
-        <div
-          className="
-    absolute 
-    bottom-0 
-    left-0 
-    right-0 
-    h-32
-    z-10
-    bg-gradient-to-b 
-    from-transparent 
-    via-white/80
-    to-gray-50
-    dark:via-slate-800/80
-    dark:to-slate-900
-    pointer-events-none
-  "
-        ></div>
+       
       </section>
     </>
   );
