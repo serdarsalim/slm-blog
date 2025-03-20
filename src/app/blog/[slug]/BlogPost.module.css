@@ -20,7 +20,7 @@
 
 .postTitle {
   font-weight: 700;
-  font-size: 2.5rem !important;
+  font-size: 2rem !important; /* Reduced from 2.5rem */
   letter-spacing: -0.015em;
   line-height: 1.1;
   margin-bottom: 1.5rem;
@@ -42,7 +42,7 @@
 }
 
 .postContent {
-  font-size: 1.125rem;
+  font-size: 1.05rem; /* Reduced from 1.125rem */
   line-height: 1.6;
   font-weight: 400;
   color: #333;
@@ -56,7 +56,7 @@
 
 /* Override Tailwind prose styles for Apple-like formatting */
 .postContent :global(h2) {
-  font-size: 1.75rem;
+  font-size: 1.6rem; /* Reduced from 1.75rem */
   font-weight: 600;
   letter-spacing: -0.015em;
   margin-top: 2.5rem;
@@ -71,7 +71,7 @@
 }
 
 .postContent :global(h3) {
-  font-size: 1.5rem;
+  font-size: 1.35rem; /* Reduced from 1.5rem */
   font-weight: 600;
   letter-spacing: -0.01em;
   margin-top: 2rem;
@@ -241,11 +241,11 @@
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .postContent {
-    font-size: 1rem;
+    font-size: 0.95rem; /* Reduced from 1rem */
   }
   
   .postTitle {
-    font-size: 2rem !important;
+    font-size: 1.8rem !important; /* Reduced from 2rem */
   }
   
   .featuredImageContainer {

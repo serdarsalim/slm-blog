@@ -10,7 +10,7 @@ import { useBlogPosts } from "@/app/hooks/blogService";
 
 export default function Blog() {
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 text-gray-800 dark:text-gray-100">
+    <div className="min-h-screen bg-white dark:bg-slate-900 text-gray-800 dark:text-gray-100 font-sans">
       {/* Outer container with max width to prevent full page width */}
       <div className="max-w-4xl mx-auto bg-white dark:bg-slate-800 shadow-sm">
         {/* Wrap all client-interactive content in Suspense */}
@@ -127,20 +127,34 @@ function BlogContent() {
   // Default fallback image for posts
   const defaultImage = "https://picsum.photos/id/1039/1000/600";
 
+  // Subtle text animation variants
+  const textCharVariants = {
+    hidden: { opacity: 0, y: 5 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.05 * i,
+        duration: 0.4,
+        ease: [0.2, 0.65, 0.3, 0.9],
+      },
+    }),
+  };
+
   return (
     <>
-      {/* Hero Section with soft gradient */}
-      <section className="py-10 bg-gradient-to-b from-blue-50/50 to-white dark:from-slate-800 dark:to-slate-800/90">
+      {/* Hero Section with minimalist Apple-like design */}
+      <section className="py-6 bg-white dark:bg-slate-900">
         <div className="max-w-3xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5 }}
-            className="relative text-center mb-6"
+            className="relative text-center mb-3"
           >
             {/* Subtle floating shape in background */}
             <motion.div
-              className="absolute -top-10 left-1/2 w-40 h-40 rounded-full bg-blue-100/60 dark:bg-blue-400/10 filter blur-3xl opacity-60 dark:opacity-30"
+              className="absolute -top-10 left-1/2 w-40 h-40 rounded-full bg-gray-50 dark:bg-blue-400/10 filter blur-3xl opacity-40 dark:opacity-30"
               animate={{
                 x: [0, 10, -10, 0],
                 y: [0, -10, 10, 0],
@@ -152,31 +166,51 @@ function BlogContent() {
               }}
             />
 
-            {/* Title and subtitle */}
-            <motion.h2
-              className="text-md text-gray-600 dark:text-gray-400 font-semibold mb-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                duration: 1,
-                delay: 0.3,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+            {/* Enhanced title with subtle character animation */}
+            <motion.div 
+              className="text-center"
+              initial="hidden"
+              animate="visible"
             >
-              Digital notes on my interests. 📚✨
-            </motion.h2>
+              {["Digital", "notes", "on", "my", "interests.", "🧶"].map((word, wordIndex) => (
+                <span key={wordIndex} className="inline-block">
+                  {wordIndex > 0 && <span>&nbsp;</span>}
+                  {[...word].map((char, charIndex) => (
+                    <motion.span
+                      key={`${wordIndex}-${charIndex}`}
+                      variants={textCharVariants}
+                      custom={(wordIndex * 5) + charIndex}
+                      className="text-[1.15em] text-gray-500 dark:text-gray-300 font-medium tracking-tight inline-block origin-bottom"
+                      animate={{
+                        color: wordIndex === 0 ? 
+                          ['#6b7280', '#4b5563', '#6b7280'] : 
+                          undefined,
+                      }}
+                      transition={{
+                        repeat: wordIndex === 0 ? Infinity : 0,
+                        repeatDelay: 3,
+                        duration: 3,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
+              ))}
+            </motion.div>
 
-            {/* Subtle gradient glow */}
+            {/* Clean minimal background */}
             <motion.div
-              className="absolute -z-10 inset-0 bg-gradient-radial from-blue-50/50 via-transparent to-transparent dark:from-blue-500/5 dark:via-transparent dark:to-transparent"
+              className="absolute -z-10 inset-0"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 2 }}
             />
           </motion.div>
 
-          {/* Category filters - Softer colors */}
-          <div className="w-full flex flex-wrap justify-center gap-2 mb-6">
+          {/* Category filters - Minimalist colors */}
+          <div className="w-full flex flex-wrap justify-center gap-2 mb-3">
             {[
               { name: "all", count: posts.length },
               ...Object.entries(categoryCounts)
@@ -200,7 +234,7 @@ function BlogContent() {
                   cursor-pointer
                   ${
                     selectedCategories.includes(name)
-                      ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                      ? "bg-gray-100 text-gray-800 dark:bg-blue-900/30 dark:text-blue-300 border border-gray-200 dark:border-blue-800"
                       : "bg-white dark:bg-slate-700 hover:bg-gray-50 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 border border-gray-100 dark:border-slate-600"
                   }
                 `}
@@ -217,7 +251,7 @@ function BlogContent() {
                       rounded-full text-[10px] font-medium
                       ${
                         selectedCategories.includes(name)
-                          ? "bg-white text-blue-500 dark:bg-blue-800 dark:text-blue-200"
+                          ? "bg-white text-gray-700 dark:bg-blue-800 dark:text-blue-200"
                           : "bg-gray-50 text-gray-600 dark:bg-slate-600 dark:text-gray-300"
                       }
                     `}
@@ -229,12 +263,12 @@ function BlogContent() {
             ))}
           </div>
 
-          {/* Search bar with softer styling */}
-          <div className="relative w-full mb-6">
+          {/* Search bar with minimalist styling */}
+          <div className="relative w-full mb-3">
             <input
               type="text"
               placeholder="Search posts..."
-              className="w-full px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800"
+              className="w-full px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600 shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-blue-800 font-normal"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -260,14 +294,14 @@ function BlogContent() {
       {/* Blog Post List Section */}
       <section
         id="blog"
-        className="py-10 bg-white dark:bg-slate-800 -mt-14 relative"
+        className="py-4 bg-white dark:bg-slate-900 relative"
       >
-        <div className="max-w-3xl mx-auto px-4 mb-20">
+        <div className="max-w-3xl mx-auto px-4 mb-10 -mt-4">
           {loading ? (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="flex flex-col items-center justify-center py-12 space-y-4"
+              className="flex flex-col items-center justify-center py-6 space-y-2"
             >
               <div className="w-10 h-10 border-4 border-blue-200 dark:border-blue-800 border-t-transparent rounded-full animate-spin"></div>
               <p className="text-gray-400 dark:text-gray-500">
@@ -278,17 +312,17 @@ function BlogContent() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-12"
+              className="text-center py-6"
             >
-              <p className="text-gray-400 dark:text-gray-500">
+              <p className="text-gray-400 dark:text-gray-500 text-sm">
                 No posts found matching your criteria. Try a different search
                 term or category.
               </p>
             </motion.div>
           ) : (
-            /* Blog post cards in single column with softer color palette */
+            /* Blog post cards in single column with Apple-like minimal design */
             <motion.div
-              className="space-y-4"
+              className="space-y-3"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
@@ -302,22 +336,22 @@ function BlogContent() {
                   variants={cardVariants}
                 >
                   <Link href={`/blog/${post.slug}`} className="block h-full">
-                    {/* Softer card colors */}
-                    <div className="flex flex-row bg-slate-100 dark:bg-slate-700 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 h-32 border border-gray-100 dark:border-slate-600">
+                    {/* Minimalist card design with subtle hover */}
+                    <div className="flex flex-row bg-white dark:bg-slate-700 rounded-lg shadow-sm overflow-hidden border border-gray-100 dark:border-slate-600 transition-all duration-300 hover:shadow-md hover:border-gray-200 dark:hover:border-slate-500 h-32">
                       {/* Content - 4/5 of the space */}
                       <div className="p-4 flex-1 w-4/5 overflow-hidden flex flex-col">
-                        <h3 className="text-base font-bold line-clamp-2 mb-1 text-gray-700 dark:text-gray-100">
+                        <h3 className="text-base font-medium tracking-tight leading-snug line-clamp-2 mb-1 text-gray-800 dark:text-gray-100">
                           {post.title}
-                        </h3>
+                        </h3> 
 
-                        {/* Excerpt - added here with line clamp */}
-                        <p className="text-xs text-gray-600 dark:text-gray-300 mb-auto line-clamp-2">
+                        {/* Excerpt - added here with line clamp - increased font size for readability */}
+                        <p className="text-sm text-gray-500 dark:text-gray-300 mb-auto line-clamp-2 leading-relaxed">
                           {post.excerpt}
                         </p>
                       </div>
 
                       {/* Image - 1/5 of the space */}
-                      <div className="relative w-1/5 min-w-[80px]">
+                      <div className="relative w-1/5 min-w-[80px] transition-transform duration-500 group-hover:scale-105">
                         <Image
                           src={post.featuredImage || defaultImage}
                           alt={post.title}
@@ -336,8 +370,6 @@ function BlogContent() {
             </motion.div>
           )}
         </div>
-
-       
       </section>
     </>
   );
