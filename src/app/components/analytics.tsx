@@ -19,7 +19,7 @@ function AnalyticsContent() {
     <>
       <Script
         strategy="afterInteractive"
-        src="https://www.googletagmanager.com/gtag/js?id=G-H753YXSDWD"
+        src="https://www.googletagmanager.com/gtag/js?id=G-L4G7WMC7ZC"
       />
       <Script
         id="google-analytics"
@@ -29,7 +29,7 @@ function AnalyticsContent() {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-XXXXXXXX', {
+            gtag('config', 'G-L4G7WMC7ZC', {
               page_path: window.location.pathname,
             });
           `,

@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import { BlogProvider } from "./blogContext";
+import GoogleTagManager from "./components/GoogleTagManager";
+import Analytics from "./components/analytics";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -25,18 +27,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const GTM_ID = 'GTM-KJKN7R99'
+
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${robotoMono.variable} antialiased`}
-      >        <BlogProvider>
-
-                <Navbar />
-               
-        {children}
-        <Footer/>
+      <body className={`${inter.variable} ${robotoMono.variable} antialiased`}>
+        <GoogleTagManager gtmId={GTM_ID} />
+        <Analytics />
+        
+        <BlogProvider>
+          <Navbar />
+          {children}
+          <Footer />
         </BlogProvider>
-
       </body>
     </html>
   );
