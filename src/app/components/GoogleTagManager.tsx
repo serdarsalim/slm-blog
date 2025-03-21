@@ -14,10 +14,6 @@ export default function GoogleTagManager({ gtmId }: GoogleTagManagerProps) {
     window.dataLayer = window.dataLayer || [];
   }, []);
 
-  if (!gtmId || gtmId === 'GTM-KJKN7R99') {
-    console.warn('GTM ID is not properly configured. Please set a valid GTM ID.');
-    return null;
-  }
 
   return (
     <>
